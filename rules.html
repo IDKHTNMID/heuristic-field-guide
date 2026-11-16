@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>這本圖鑑的規則｜啟發式演算法圖鑑</title>
+<meta name="description" content="這個網站照一份規則檔 AGENTS.md 長出來：新增演算法動哪幾個檔、每頁固定哪幾塊、做完要過哪些檢查。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="bar"><a class="chip" href="index.html">← 回圖鑑</a><b>這本圖鑑的規則</b></nav>
+
+  <header class="tile rules-head">
+    <span class="k">AGENTS.md</span>
+    <h1>這本圖鑑的規則</h1>
+    <p class="lead">整個網站照一份規則檔 <a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md">AGENTS.md</a> 長出來。AI 或人要新增演算法，讀它就能做。下面是最重要的五件事，每一塊都連回規則的那一節。</p>
+  </header>
+
+  <main>
+    <section id="add" aria-labelledby="add-title">
+      <h2 id="add-title">新增一個演算法，只動 3 個地方</h2>
+      <ol class="rules-files">
+        <li class="tile"><span class="step-no">1</span><code>js/algorithms/&lt;slug&gt;.js</code><span>演算法程式。先寫虛擬碼，跑到哪一行就用 <code>t()</code> 回報，demo 才知道要亮哪一行。</span></li>
+        <li class="tile"><span class="step-no">2</span><code>js/registry.js</code><span>加一筆：編號、中文名、類別、能跑哪種問題。</span></li>
+        <li class="tile"><span class="step-no">3</span><code>algorithms/&lt;slug&gt;.html</code><span>複製範本，把固定的 7 塊填好。</span></li>
+      </ol>
+      <p class="rules-auto"><b>其他都會自動長出來：</b>首頁卡片和篩選、標題區、逐行 demo 面板、上一頁／下一頁。</p>
+      <p class="rules-warn">要改到其他檔案（畫圖、demo、樣式、檢查腳本），就代表規則不夠用：先停下來問，不自己改。</p>
+      <ol class="rules-steps" aria-label="第 3 節的 8 個步驟">
+        <li>確認範圍</li><li>查證資料</li><li>寫演算法程式</li><li>登記</li><li>寫頁面</li><li>跑檢查</li><li>開瀏覽器看</li><li>回報並記錄</li>
+      </ol>
+      <p class="rules-src"><a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md#3-新增一個演算法照順序做不跳步">規則第 3 節：8 個步驟，照順序做 →</a></p>
+    </section>
+
+    <section id="blocks" aria-labelledby="blocks-title">
+      <h2 id="blocks-title">每一頁都是這 7 塊</h2>
+      <p>順序和 id 固定，字數有上限。點一塊，看它在模擬退火那一頁長什麼樣子。</p>
+      <ol class="rules-blocks">
+        <li><a class="tile" href="algorithms/simulated-annealing.html#analogy"><span class="step-no">1</span><b>生活比喻</b><code>analogy</code><span>兩個 emoji＋一段比喻，80 字</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#demo"><span class="step-no">2</span><b>一行一行看它跑</b><code>demo</code><span>面板自動產生，下面一句成績單</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#params"><span class="step-no">3</span><b>參數怎麼調</b><code>params</code><span>四欄表格，補充 80 字</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#try"><span class="step-no">4</span><b>試試看</b><code>try</code><span>2～3 個實驗，每段 80 字</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#fit"><span class="step-no">5</span><b>適合／不適合</b><code>fit</code><span>各 2～3 點，每點 28 字</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#related"><span class="step-no">6</span><b>跟其他演算法的關係</b><code>related</code><span>至少連 1 頁，每點 50 字</span></a></li>
+        <li><a class="tile" href="algorithms/simulated-annealing.html#refs"><span class="step-no">7</span><b>參考資料</b><code>refs</code><span>至少 1 筆原始論文或教科書</span></a></li>
+      </ol>
+      <p class="rules-src"><a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md#41-演算法頁的區塊順序與-id-固定">規則第 4.1 節：每一塊寫什麼 →</a></p>
+    </section>
+
+    <section id="checks" aria-labelledby="checks-title">
+      <h2 id="checks-title">做完要過的檢查</h2>
+      <div class="rules-checks">
+        <div class="tile"><code>node tests/run.mjs</code><span>7 塊都在、順序對、沒超過字數；每行虛擬碼都跑得到；預設參數跑完會變好；同一個種子結果一樣。</span></div>
+        <div class="tile"><code>node tests/presets.mjs &lt;slug&gt;</code><span>把「試試看」的按鈕都跑一遍，頁面上寫的數字要和它印的一樣。</span></div>
+        <div class="tile"><code>node tests/stats.mjs &lt;slug&gt; --write</code><span>寫成績單。演算法偷讀答案（最高峰在哪、城市座標）就停下來。</span></div>
+        <div class="tile"><code>node --test</code><span>檢查腳本自己的測試。不能為了讓檢查通過去改檢查腳本。</span></div>
+      </div>
+      <p>過了之後還要開瀏覽器，照完成檢查清單逐項看：按「下一行」走完一整步、按「上一行」退回去、手機寬度不能橫向捲動。</p>
+      <p class="rules-src"><a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md#9-檢查與預覽">規則第 9 節：檢查與完成檢查清單 →</a></p>
+    </section>
+
+    <section id="test" aria-labelledby="test-title">
+      <h2 id="test-title">規則夠不夠用？讓沒看過對話的 AI 試</h2>
+      <p><a href="algorithms/great-deluge.html">#09 大洪水演算法</a>是測試：另開一個看不到原本對話的 AI，在專案的複本裡只讀 AGENTS.md，照規則新增。</p>
+      <div class="rules-result">
+        <div class="tile"><b>3</b><span>個地方：程式、頁面、registry 一筆，沒碰其他檔案</span></div>
+        <div class="tile"><b>✔</b><span><code>node tests/run.mjs</code> 通過</span></div>
+        <div class="tile"><b>9</b><span>處規則寫得不清楚，它回報後都補進規則</span></div>
+      </div>
+      <p>補進去的例子：先登記才跑得出「試試看」的數字，所以第 4、5 步對調；查不到台灣譯名就直譯。瀏覽器那一關由原本的對話補看。</p>
+      <p class="rules-src"><a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md#11-修訂紀錄">規則第 11 節：測試結果和補上的規則 →</a></p>
+    </section>
+
+    <section id="history" aria-labelledby="history-title">
+      <h2 id="history-title">規則怎麼改過來的</h2>
+      <p>每次改規則都要寫下改了什麼、為什麼。新的在上面。</p>
+      <ol class="rules-history">
+        <li><b>虛擬碼寫清楚</b>名詞第一次出現就說它是什麼，迴圈寫出重複哪幾行、到什麼時候停。</li>
+        <li><b>加這一頁</b>把規則最重要的五件事做成看得到的一頁。</li>
+        <li><b>鄰居畫成四格</b>TSP 的鄰居是一整條路線，三格各畫一條，第四格寫還有幾條；地形的鄰居擠成一團時加「放大」框。</li>
+        <li><b>成績單</b>預設的種子 1 剛好讓每個演算法都過關，看起來比實際好。每頁加一句 100 個種子的成績，演算法偷讀答案就停。</li>
+        <li><b>方塊圖鑑風</b>地圖和頁面用同一種畫法，看起來不像拼接。</li>
+        <li><b>四個角色試讀</b>統一用「小山頭（局部最佳解）」；TSP 的路線長固定從城市 0 算，先寫會失敗的測試再改。</li>
+        <li><b>大洪水測試</b>補上 9 處漏洞。</li>
+        <li><b>粒子群照規則新增</b>只動了 3 個地方，補上 2 條沒寫清楚的規則。</li>
+        <li><b>拿掉「步驟」區塊</b>文字太多、虛擬碼和執行過程對不起來，改成 demo 裡一行一行亮的虛擬碼，每塊加字數上限。</li>
+        <li><b>第一版</b>讀者是沒學過的資工系學生；兩種問題；每個演算法自己標示能跑哪一種。</li>
+      </ol>
+      <p class="rules-src"><a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md#11-修訂紀錄">規則第 11 節：完整的修訂紀錄 →</a></p>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <span>這一頁是規則的摘要；兩邊說法不一樣時，以 AGENTS.md 為準。</span>
+    <a href="https://github.com/IDKHTNMID/heuristic-field-guide/blob/main/AGENTS.md">完整規則（AGENTS.md）</a>
+  </footer>
+</div>
+</body>
+</html>

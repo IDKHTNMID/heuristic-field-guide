@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>啟發式演算法圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="expect" href="#top-bar" blocking="render">
+</head>
+<body data-slug="differential-evolution">
+<div class="wrap">
+  <header id="page-header"></header>
+
+  <main>
+    <section id="analogy">
+      <h2>生活比喻</h2>
+      <div class="emoji" aria-hidden="true">👥📏</div>
+      <p>一群人在山裡找最高點。每個人看兩個同伴相距多遠，就跨多大步。大家還散開時步伐大，越靠越近，步伐就自己變小。</p>
+    </section>
+
+    <section id="demo">
+      <h2>一行一行看它跑</h2>
+      <div class="demo" data-algorithm="differential-evolution"></div>
+      <p class="demo-scorecard">種子 1～100 各跑一次：三座山 <b>66</b> 次爬上最高峰；畫面一開始的種子 1 剛好是成功的那幾次之一。</p>
+    </section>
+
+    <section id="params">
+      <h2>參數怎麼調</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>參數</th><th>意思</th><th>調大會怎樣</th><th>預設值</th></tr></thead>
+          <tbody>
+            <tr data-key="np"><td>族群大小 NP</td><td>同時有幾個點在找</td><td>撒得更廣、方向更多樣；計算量也變多</td><td>20</td></tr>
+            <tr data-key="f"><td>縮放係數 F</td><td>差向量要走幾倍</td><td>步伐變大、跨得過山谷；太小就很快縮成一團</td><td>0.6</td></tr>
+            <tr data-key="cr"><td>交配率 CR</td><td>每個座標取 v 的機率</td><td>兩個座標常常一起變，可以斜著走；0 就只能橫走或直走</td><td>0.7</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>這裡實作最常見的 DE/rand/1/bin。預設值是在兩張地形上試出來的，不是原始論文的建議值。</p>
+    </section>
+
+    <section id="try">
+      <h2>試試看</h2>
+      <ol class="try-list">
+        <li>
+          <h3>步伐會自己變小</h3>
+          <p>三座山種子 1。留意說明裡的平均步伐：第 1 代約 0.299，點散在整張圖；族群擠上最高峰 1.000 後，第 60 代只剩 0.000。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=1">套用這組設定 ▶</button>
+        </li>
+        <li>
+          <h3>F 太小會提早縮成一團</h3>
+          <p>群峰種子 6。F = 0.6 找到 1.000；F 改成 0.1，一開始步伐就很小，族群很快縮在一座山上，停在 0.601。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=6">F = 0.6 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=6&amp;f=0.1">F = 0.1 ▶</button>
+        </li>
+        <li>
+          <h3>族群太小</h3>
+          <p>三座山種子 7。20 個點找到 1.000；只剩 4 個點時，差向量只有幾種，停在 0.741。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=7">NP = 20 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=7&amp;np=4">NP = 4 ▶</button>
+        </li>
+      </ol>
+    </section>
+
+    <section id="fit">
+      <h2>適合／不適合</h2>
+      <div class="fit-grid">
+        <div class="yes"><h3>適合</h3><ul>
+          <li>連續數值的最佳化</li>
+          <li>不知道步伐該多大的問題</li>
+          <li>想要程式短、參數少</li>
+        </ul></div>
+        <div class="no-fit"><h3>不適合</h3><ul>
+          <li>路線、排列這類離散問題</li>
+          <li>族群很小的時候</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="related">
+      <h2>跟其他演算法的關係</h2>
+      <ul>
+        <li><a href="genetic-algorithm.html">基因演算法</a>的突變幅度固定；差分演化的步伐跟著族群變小。</li>
+        <li><a href="simulated-annealing.html">模擬退火</a>也是先大步後小步，但要自己設降溫速度。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>參考資料</h2>
+      <p>差分演化由第 1 篇提出；變體 L-SHADE 是 IEEE CEC 2014 最佳化競賽的冠軍（第 2 筆）。</p>
+      <ol>
+        <li>Storn, R., &amp; Price, K.（1997）。〈Differential Evolution – A Simple and Efficient Heuristic for global Optimization over Continuous Spaces〉。Journal of Global Optimization，11，341–359。<a href="https://doi.org/10.1023/A:1008202821328">doi:10.1023/A:1008202821328</a></li>
+        <li>IEEE CEC 2014 最佳化競賽網頁（P. N. Suganthan 維護，列出 L-SHADE 為冠軍）。<a href="https://personal.ntu.edu.sg/EPNSugan/index_files/CEC2014/CEC2014.htm">personal.ntu.edu.sg/EPNSugan/index_files/CEC2014/CEC2014.htm</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <nav id="page-nav" aria-label="上一個／下一個演算法"></nav>
+</div>
+<script src="../js/core.js"></script>
+<script src="../js/backdrop.js"></script>
+<script src="../js/registry.js"></script>
+<script src="../js/problems/terrain.js"></script>
+<script src="../js/problems/tsp.js"></script>
+<script src="../js/render.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/algorithms/differential-evolution.js"></script>
+</body>
+</html>

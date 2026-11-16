@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>啟發式演算法圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="expect" href="#top-bar" blocking="render">
+</head>
+<body data-slug="particle-swarm-optimization">
+<div class="wrap">
+  <header id="page-header"></header>
+
+  <main>
+    <section id="analogy">
+      <h2>生活比喻</h2>
+      <div class="emoji" aria-hidden="true">📱⛰️</div>
+      <p>一群人分頭在山裡找最高點，用群組互報位置。每個人帶著原本的衝勁，同時被拉向自己到過的最高處、和群組裡最高的那一處。</p>
+    </section>
+
+    <section id="demo">
+      <h2>一行一行看它跑</h2>
+      <div class="demo" data-algorithm="particle-swarm-optimization"></div>
+      <p class="demo-scorecard">種子 1～100 各跑一次：三座山 <b>56</b> 次爬上最高峰；畫面一開始的種子 1 剛好是成功的那幾次之一。</p>
+    </section>
+
+    <section id="params">
+      <h2>參數怎麼調</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>參數</th><th>意思</th><th>調大會怎樣</th><th>預設值</th></tr></thead>
+          <tbody>
+            <tr data-key="n"><td>粒子數量</td><td>同時有幾個粒子在找</td><td>撒得更廣，比較不會一起擠到小山頭（局部最佳解）；計算量也變多</td><td>20</td></tr>
+            <tr data-key="w"><td>慣性權重 w</td><td>上一輪的速度留下幾成</td><td>衝得更久、看得更遠（多探索）；太大就一直衝過頭，收不準</td><td>0.7</td></tr>
+            <tr data-key="c1"><td>自己的拉力 c₁</td><td>多想回到自己到過的最高處</td><td>各自在附近找得更久；設成 0 就只跟著大家走</td><td>1.5</td></tr>
+            <tr data-key="c2"><td>大家的拉力 c₂</td><td>多想去群組裡的最高處</td><td>更快聚到一起；設成 0 就各找各的，沒有交流</td><td>1.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>速度每個方向最多 0.15（地圖寬的 15%），撞到地圖邊緣就停在邊上。</p>
+    </section>
+
+    <section id="try">
+      <h2>試試看</h2>
+      <ol class="try-list">
+        <li>
+          <h3>衝勁太大會衝過頭</h3>
+          <p>群峰種子 24。w = 0.7 最後找到最高峰 1.000；w 改成 1.2，每輪速度乘 1.2，越衝越快、一直衝過頭，第 25 步後就沒再進步，停在 0.600。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=24">w = 0.7 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=24&amp;w=1.2">w = 1.2 ▶</button>
+        </li>
+        <li>
+          <h3>群組斷線</h3>
+          <p>群峰種子 1。預設找到 1.000；c₂ 改成 0，每個人只顧自己，沒人知道別人找到更高的，停在 0.596。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=1">預設 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=1&amp;c2=0">c₂ = 0 ▶</button>
+        </li>
+        <li>
+          <h3>粒子太少</h3>
+          <p>三座山種子 1。20 個粒子找到 1.000；只剩 4 個時，大家一起聚到小山上，停在 0.720。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=1">20 個 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=1&amp;n=4">4 個 ▶</button>
+        </li>
+      </ol>
+    </section>
+
+    <section id="fit">
+      <h2>適合／不適合</h2>
+      <div class="fit-grid">
+        <div class="yes"><h3>適合</h3><ul>
+          <li>連續數值的最佳化</li>
+          <li>不知道答案在哪，要大範圍找</li>
+          <li>想要程式短、參數意思直觀</li>
+        </ul></div>
+        <div class="no-fit"><h3>不適合</h3><ul>
+          <li>路線、排列這類離散問題</li>
+          <li>粒子很少，容易一起卡在小山</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="related">
+      <h2>跟其他演算法的關係</h2>
+      <ul>
+        <li><a href="differential-evolution.html">差分演化</a>也是一群點在連續空間找，但靠同伴之間的差決定步伐。</li>
+        <li><a href="genetic-algorithm.html">基因演算法</a>每一代換一批新解；粒子群是同一批粒子一直移動。</li>
+        <li><a href="ant-colony-optimization.html">蟻群最佳化</a>也是群體智慧，但把資訊留在路上，不直接互報位置。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>參考資料</h2>
+      <p>粒子群由第 1 篇提出；本頁用的慣性權重 w 來自第 2 篇，原始版本沒有 w。</p>
+      <ol>
+        <li>Kennedy, J., &amp; Eberhart, R.（1995）。〈Particle swarm optimization〉。Proceedings of ICNN'95 – International Conference on Neural Networks，4，1942–1948。<a href="https://doi.org/10.1109/ICNN.1995.488968">doi:10.1109/ICNN.1995.488968</a></li>
+        <li>Shi, Y., &amp; Eberhart, R.（1998）。〈A modified particle swarm optimizer〉。1998 IEEE International Conference on Evolutionary Computation Proceedings，69–73。<a href="https://doi.org/10.1109/ICEC.1998.699146">doi:10.1109/ICEC.1998.699146</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <nav id="page-nav" aria-label="上一個／下一個演算法"></nav>
+</div>
+<script src="../js/core.js"></script>
+<script src="../js/backdrop.js"></script>
+<script src="../js/registry.js"></script>
+<script src="../js/problems/terrain.js"></script>
+<script src="../js/problems/tsp.js"></script>
+<script src="../js/render.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/algorithms/particle-swarm-optimization.js"></script>
+</body>
+</html>

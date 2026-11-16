@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>啟發式演算法圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="expect" href="#top-bar" blocking="render">
+</head>
+<body data-slug="tabu-search">
+<div class="wrap">
+  <header id="page-header"></header>
+
+  <main>
+    <section id="analogy">
+      <h2>生活比喻</h2>
+      <div class="emoji" aria-hidden="true">🏮📝</div>
+      <p>逛夜市找好吃的攤位，口袋放一張紙條，記著最近去過的攤。紙條上的不准再去，就算附近只剩比較差的，也得往沒去過的地方走。</p>
+    </section>
+
+    <section id="demo">
+      <h2>一行一行看它跑</h2>
+      <div class="demo" data-algorithm="tabu-search"></div>
+      <p class="demo-scorecard">種子 1～100 各跑一次：三座山 <b>30</b> 次爬上最高峰，隨機 20 城 <b>21</b> 次找到最短路線（平均只多 0.2%）；畫面一開始的種子 1 剛好是成功的那幾次之一。</p>
+    </section>
+
+    <section id="params">
+      <h2>參數怎麼調</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>參數</th><th>意思</th><th>調大會怎樣</th><th>預設值</th></tr></thead>
+          <tbody>
+            <tr data-key="tenure"><td>禁忌表長度</td><td>最近走過的幾個位置不准回去</td><td>越不會繞回原地；太短（例如 1）就在山頂來回，跟爬山法差不多</td><td>地形 600／TSP 30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>地形每步只走 0.02，要把整座山走遍才離得開，所以要記很多格。TSP 記的是整條路線。</p>
+    </section>
+
+    <section id="try">
+      <h2>試試看</h2>
+      <ol class="try-list">
+        <li>
+          <h3>記憶讓它不回頭</h3>
+          <p>隨機 20 城種子 6。爬山法停在 413.4；禁忌表長度 30 會繼續換路線，找到 393.8。長度改成 1 就來回打轉，跟爬山法一樣 413.4。</p>
+          <button type="button" class="try-set" data-set="problem=tsp&amp;map=random-20&amp;seed=6">長度 30 ▶</button>
+          <button type="button" class="try-set" data-set="problem=tsp&amp;map=random-20&amp;seed=6&amp;tenure=1">長度 1 ▶</button>
+        </li>
+        <li>
+          <h3>把整座山走遍才離開</h3>
+          <p>三座山種子 7。先爬上 0.720 的小山頭（局部最佳解），走過的格子不准回去，只好一圈圈往外繞。最後爬上右下的 0.848，沒走到最高峰。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=7">套用這組設定 ▶</button>
+        </li>
+        <li>
+          <h3>山小又多的時候</h3>
+          <p>群峰種子 8。爬山法 7 步就停在 0.259；禁忌搜尋從同一個起點繞出小山，一路找到 0.997。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=8">套用這組設定 ▶</button>
+        </li>
+      </ol>
+    </section>
+
+    <section id="fit">
+      <h2>適合／不適合</h2>
+      <div class="fit-grid">
+        <div class="yes"><h3>適合</h3><ul>
+          <li>排列、排程、路線這類離散問題</li>
+          <li>想要每次結果都一樣（起點除外）</li>
+        </ul></div>
+        <div class="no-fit"><h3>不適合</h3><ul>
+          <li>連續又很細的空間，要記太多格</li>
+          <li>鄰居很多，每步都要全部排序</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="related">
+      <h2>跟其他演算法的關係</h2>
+      <ul>
+        <li><a href="hill-climbing.html">爬山法</a>沒有更好的鄰居就停；禁忌搜尋會繼續走。</li>
+        <li><a href="simulated-annealing.html">模擬退火</a>靠機率接受比較差的解；禁忌搜尋靠記憶。</li>
+        <li><a href="iterated-local-search.html">迭代局部搜尋</a>不一步步繞出去，直接踢到遠一點的地方。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>參考資料</h2>
+      <p>禁忌搜尋由第 1 篇提出。教科書多半記「走法」，並讓比歷史最佳還好的走法破例；本頁記的是走過的解，走過的不會比最佳還好，所以不需要破例。</p>
+      <ol>
+        <li>Glover, F.（1986）。〈Future paths for integer programming and links to artificial intelligence〉。Computers &amp; Operations Research，13(5)，533–549。<a href="https://doi.org/10.1016/0305-0548(86)90048-1">doi:10.1016/0305-0548(86)90048-1</a></li>
+        <li>Glover, F.（1989）。〈Tabu Search—Part I〉。ORSA Journal on Computing，1(3)，190–206。<a href="https://doi.org/10.1287/ijoc.1.3.190">doi:10.1287/ijoc.1.3.190</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <nav id="page-nav" aria-label="上一個／下一個演算法"></nav>
+</div>
+<script src="../js/core.js"></script>
+<script src="../js/backdrop.js"></script>
+<script src="../js/registry.js"></script>
+<script src="../js/problems/terrain.js"></script>
+<script src="../js/problems/tsp.js"></script>
+<script src="../js/render.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/algorithms/tabu-search.js"></script>
+</body>
+</html>

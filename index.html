@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>啟發式演算法圖鑑</title>
+<meta name="description" content="寫給沒學過的資工系學生：一個演算法一頁，在同一張地圖上一行一行跑給你看。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="bento">
+    <div class="tile t-title" id="title-tile">
+      <span class="k">HEURISTIC FIELD GUIDE</span>
+      <h1>啟發式<br>演算法圖鑑</h1>
+      <p class="lead">一個演算法一頁。不背定義，直接看它在地圖上一行一行跑。</p>
+      <div><a class="btn primary" id="start" href="algorithms/hill-climbing.html">▶ 從 01 爬山法開始</a></div>
+    </div>
+    <a class="tile t-live" id="hero" href="algorithms/hill-climbing.html" aria-label="輪流播放每個演算法">
+      <span class="hud"><span>LIVE</span><span id="hero-name">載入中…</span><span id="hero-score"></span></span>
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <span class="hero-bar"><i id="hero-bar"></i></span>
+    </a>
+    <div class="tile t-count"><b id="count">00</b><span>個演算法<br>同一套地圖</span></div>
+    <div class="tile t-problem">
+      <svg viewBox="0 0 56 56" aria-hidden="true"><g fill="none" stroke="var(--ink)" stroke-width="2.5"><ellipse cx="28" cy="30" rx="24" ry="18"/><ellipse cx="30" cy="30" rx="15" ry="11"/><ellipse cx="32" cy="29" rx="6" ry="4.5"/></g><rect x="28" y="25" width="8" height="8" fill="var(--coral)" stroke="var(--ink)" stroke-width="2"/></svg>
+      <div><h3>連續地形</h3><p>找最高點。看誰會卡在小山頭（局部最佳解）。</p></div>
+    </div>
+    <div class="tile t-problem">
+      <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M8 14 L30 8 L48 20 L42 44 L18 48 L10 32 Z" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round"/><path d="M8 14 L30 8 L48 20 L42 44 L18 48 L10 32 Z" fill="none" stroke="var(--yellow)" stroke-width="3.5" stroke-linejoin="round"/><g fill="var(--teal)" stroke="var(--ink)" stroke-width="2"><rect x="4" y="10" width="8" height="8"/><rect x="26" y="4" width="8" height="8"/><rect x="44" y="16" width="8" height="8"/><rect x="38" y="40" width="8" height="8"/><rect x="14" y="44" width="8" height="8"/><rect x="6" y="28" width="8" height="8"/></g></svg>
+      <div><h3>TSP 路線</h3><p>每座城市去一次，路線越短越好。</p></div>
+    </div>
+  </header>
+
+  <section class="how" aria-labelledby="how-title">
+    <h2 id="how-title">每一頁都這樣讀</h2>
+    <div class="tile"><span class="step-no">1</span><b>先讀一句比喻</b><span>知道它大概在做什麼。</span></div>
+    <div class="tile"><span class="step-no">2</span><b>按「下一行」看它跑</b><span>亮起來的虛擬碼，就是地圖上正在發生的事；按「上一行」可以倒回去。</span></div>
+    <div class="tile"><span class="step-no">3</span><b>按「試試看」改參數</b><span>一鍵套用設定，看結果差在哪。</span></div>
+  </section>
+
+  <div class="filters seg" role="group" aria-label="篩選問題">
+    <button type="button" data-filter="all" aria-pressed="true">全部</button>
+    <button type="button" data-filter="terrain" aria-pressed="false">連續地形</button>
+    <button type="button" data-filter="tsp" aria-pressed="false">TSP 路線</button>
+  </div>
+  <div id="grid"></div>
+
+  <footer class="site-foot">
+    <span>縮圖是每個演算法用預設參數、種子 1 實際跑出來的（能跑地形的都用地形，兩張地圖輪流換）。</span>
+    <a href="rules.html">這個網站怎麼做的？看這本圖鑑的規則 →</a>
+  </footer>
+</div>
+<script src="js/core.js"></script>
+<script src="js/backdrop.js"></script>
+<script src="js/registry.js"></script>
+<script src="js/problems/terrain.js"></script>
+<script src="js/problems/tsp.js"></script>
+<script src="js/render.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

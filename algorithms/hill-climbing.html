@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>啟發式演算法圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="expect" href="#top-bar" blocking="render">
+</head>
+<body data-slug="hill-climbing">
+<div class="wrap">
+  <header id="page-header"></header>
+
+  <main>
+    <section id="analogy">
+      <h2>生活比喻</h2>
+      <div class="emoji" aria-hidden="true">🌫️⛰️</div>
+      <p>大霧裡爬山，只看得到腳邊。每一步都往四周最高的方向跨；四周都比腳下低，就停下來。</p>
+    </section>
+
+    <section id="demo">
+      <h2>一行一行看它跑</h2>
+      <div class="demo" data-algorithm="hill-climbing"></div>
+      <p class="demo-scorecard">種子 1～100 各跑一次：三座山 <b>30</b> 次爬上最高峰，隨機 20 城 <b>12</b> 次找到最短路線（平均只多 1.6%）；畫面一開始的種子 1 剛好是成功的那幾次之一。</p>
+    </section>
+
+    <section id="params">
+      <h2>參數怎麼調</h2>
+      <p>沒有參數。只有起點（種子）會影響結果：起點不同，停下來的山頭也可能不同。</p>
+    </section>
+
+    <section id="try">
+      <h2>試試看</h2>
+      <ol class="try-list">
+        <li>
+          <h3>起點決定命運</h3>
+          <p>三座山。種子 3 爬到最高峰 1.000；種子 7 爬了 32 步，停在 0.720 的小山頭（局部最佳解）。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=3">種子 3 ▶</button>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=three-peaks&amp;seed=7">種子 7 ▶</button>
+        </li>
+        <li>
+          <h3>山越多越容易卡住</h3>
+          <p>群峰，種子 8：只走 7 步就停在 0.259 的小山。</p>
+          <button type="button" class="try-set" data-set="problem=terrain&amp;map=many-peaks&amp;seed=8">種子 8 ▶</button>
+        </li>
+        <li>
+          <h3>沒有交叉，也不一定最短</h3>
+          <p>隨機 20 城。種子 6 停在 413.4，種子 4 停在 393.8，兩條路線都沒有交叉。</p>
+          <button type="button" class="try-set" data-set="problem=tsp&amp;map=random-20&amp;seed=6">種子 6 ▶</button>
+          <button type="button" class="try-set" data-set="problem=tsp&amp;map=random-20&amp;seed=4">種子 4 ▶</button>
+        </li>
+      </ol>
+    </section>
+
+    <section id="fit">
+      <h2>適合／不適合</h2>
+      <div class="fit-grid">
+        <div class="yes"><h3>適合</h3><ul>
+          <li>只有一座或少數幾座山的問題</li>
+          <li>要很快拿到還不錯的答案</li>
+          <li>當別的演算法的零件（例：迭代局部搜尋）</li>
+        </ul></div>
+        <div class="no-fit"><h3>不適合</h3><ul>
+          <li>到處都是小山頭的問題</li>
+          <li>一定要找到最好答案的時候</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="related">
+      <h2>跟其他演算法的關係</h2>
+      <ul>
+        <li><a href="simulated-annealing.html">模擬退火</a>一次也只看一個解，但偶爾肯往下走。</li>
+        <li><a href="tabu-search.html">禁忌搜尋</a>卡住時改走「最不差」的鄰居，不准走回頭路。</li>
+        <li><a href="iterated-local-search.html">迭代局部搜尋</a>把爬山法當零件，卡住就踢一下再爬。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>參考資料</h2>
+      <p>爬山法是最基本的局部搜尋想法，沒有單一的原始論文。TSP 上用的 2-opt 鄰居，常引用下面這篇：</p>
+      <ol>
+        <li>Croes, G. A.（1958）。〈A Method for Solving Traveling-Salesman Problems〉。Operations Research，6(6)，791–812。<a href="https://doi.org/10.1287/opre.6.6.791">doi:10.1287/opre.6.6.791</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <nav id="page-nav" aria-label="上一個／下一個演算法"></nav>
+</div>
+<script src="../js/core.js"></script>
+<script src="../js/backdrop.js"></script>
+<script src="../js/registry.js"></script>
+<script src="../js/problems/terrain.js"></script>
+<script src="../js/problems/tsp.js"></script>
+<script src="../js/render.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/page.js"></script>
+<script src="../js/algorithms/hill-climbing.js"></script>
+</body>
+</html>
