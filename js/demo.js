@@ -62,7 +62,7 @@
         </div>
         <div class="demo-side">
           <div class="demo-stats">
-            <div><span>步數</span><b class="v-step">0</b><small class="v-max"></small></div>
+            <div><span>跑完幾步</span><b class="v-step">0</b><small class="v-max"></small></div>
             <div><span>試過幾個解</span><b class="v-evals">0</b></div>
             <div class="best"><span>目前最佳</span><b class="v-best"></b></div>
           </div>
@@ -192,11 +192,12 @@
       $(".v-max").textContent = " / " + algo.maxSteps[s.kind];
       $(".v-best").textContent = problem.display(shown.best);
       $(".v-evals").textContent = (midStep ? evalsBefore : evals).toLocaleString("en-US");
-      $(".v-progress").textContent = s.mode === "line" && events.length
-        ? `${steps === 0 ? "開始前" : `第 ${steps} 步`}・第 ${cursor + 1}／${events.length} 行` : "";
+      const ev = events[cursor];
+      // "第幾行" is the pseudocode line lit below, not how many of the step's events have been shown.
+      $(".v-progress").textContent = s.mode === "line" && ev
+        ? `${steps === 0 ? "開始前" : `第 ${steps} 步`}・第 ${ev.line} 行` : "";
       lineEls.forEach((li) => { li.classList.remove("on", "done"); li.querySelector(".say").textContent = ""; });
       events.slice(0, cursor).forEach((e) => lineEls[e.line - 1] && lineEls[e.line - 1].classList.add("done"));
-      const ev = events[cursor];
       if (ev && lineEls[ev.line - 1]) {
         const li = lineEls[ev.line - 1];
         li.classList.add("on");
